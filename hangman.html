@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            .class0{
+                width:50%;
+                margin-top: 150px;
+                margin-left:300px;
+                font-size: 50px;
+                text-align: center;
+                background-color: teal;
+                color:whitesmoke;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var emptystring="";
+            var guess="";
+            var ourarr=[];
+            var mainset=[];
+            var counter=0;
+            var tempcounter=0;
+            var neweststring=[];
+            var body=document.querySelector('body');
+            var celebrity=['KAREENA KAPOOR KHAN','SAIF ALI KHAN','AAMIR KHAN','AKSHAY KUMAR','KARTIK AARYAN','AANANYA PANDEY','CHUNKEY PANDEY','AALIA BHATT','SHAHRUKH KHAN','SALMAN KHAN','KATRINA KAIF','SONAKSHI SINHA','SHATRUGAN SINHA','SOHAIL KHAN','ARBAZ KHAN','DEEPIKA PADUKONE','RANVEER SINGH','RANBIR KAPOOR','SUSHANT RAJPUT','JAQULINE FERNANDES','RISHI KAPOOR','AMITABH BACHCHAN','ABHISHEK BACHCHAN','AISHWARYA RAI','RAVEENA TANDON','SONALI BINDRE','AAYUSHMAN KHURANA','VARUN DHAWAN','SIDDHARTH MALHOTRA']
+            function random(number){
+                return Math.floor(Math.random()*number);
+            }
+            function hanging(){
+                counter+=1;
+                var image=document.getElementById("image");
+                if(counter==1){
+                    image.src="https://www.oligalma.com/downloads/images/hangman/hangman/5.jpg";
+                    
+                }
+                else if(counter==2){
+                    image.src="https://www.oligalma.com/downloads/images/hangman/hangman/6.jpg";
+                    
+                }
+                else if(counter==3){
+                    image.src="https://www.oligalma.com/downloads/images/hangman/hangman/7.jpg";
+                    
+                }
+                else if(counter==4){
+                    image.src="https://www.oligalma.com/downloads/images/hangman/hangman/8.jpg";
+                    
+                }
+                else if(counter==5){
+                    image.src="https://www.oligalma.com/downloads/images/hangman/hangman/9.jpg";
+                    
+                }
+                else if(counter==6){
+                    image.src="https://www.oligalma.com/downloads/images/hangman/hangman/10.jpg";
+                    
+                    var newdiv=document.createElement("div");
+                    newdiv.style.color="red";
+                    newdiv.style.backgroundColor="white";
+                    newdiv.textContent="YOU LOSE";
+                    newdiv.style.fontSize="50px";
+                    var our=document.getElementById("start")
+                    our.append(newdiv);
+                    var butdiv=document.getElementById("divb");
+                    butdiv.remove();
+                    var tempdiv=document.getElementById("guess");
+                    tempdiv.textContent=guess;
+                    var playagain=document.createElement("button");
+                    playagain.textContent="PLAY AGAIN";
+                    playagain.addEventListener("click",startgame);
+                    our.append(playagain);
+
+                }
+                
+                
+            }
+            function adding(){
+                var flag=0;
+                var tempdiv=document.getElementById("guess");
+                for(var i=0;i<guess.length;i++){
+                    flag=0;
+                    for(var j=0;j<mainset.length;j++){
+                        if(guess[i]==mainset[j]){
+                            neweststring[i]=guess[i];
+                            flag=1;
+                            break;
+                        }
+                    }
+                    if(flag==0){
+                        neweststring[i]=" _ "
+                    }
+                }
+
+                var str1=neweststring.join("");
+                
+                if(str1==guess){
+                    var newdiv=document.createElement("div");
+                    newdiv.style.color="green";
+                    newdiv.style.backgroundColor="white";
+                    newdiv.textContent="YOU WON";
+                    newdiv.style.fontSize="50px";
+                    var our=document.getElementById("start")
+                    our.append(newdiv);
+                    var butdiv=document.getElementById("divb");
+                    butdiv.remove();
+                    var playagain=document.createElement("button");
+                    playagain.textContent="PLAY AGAIN";
+                    playagain.addEventListener("click",startgame);
+                    our.append(playagain);
+
+                }
+                tempdiv.textContent=str1;
+
+            }
+            function compare(e){
+                var temp=e.target.textContent;
+                e.target.remove();
+                var flag=0;
+                for(var i=0;i<guess.length;i++){
+                    if(guess[i]==temp){
+                        flag=1;
+                        mainset.push(guess[i]);
+                        break;
+                    }
+                }
+                if(flag==0){
+                    hanging();
+                    
+                }
+                else{
+                    adding();
+                }
+            }
+            function startgame(){
+                emptystring="";
+                guess="";
+                 ourarr=[];
+                neweststring=[];
+                counter=0;
+                mainset=[];
+                if(tempcounter==0){
+                var remove=document.getElementById("main");
+                remove.remove();
+                tempcounter+=1;
+                }
+                else{
+                    var remove=document.getElementById("start");
+                    remove.remove();
+                }
+                var div=document.createElement('div');
+                div.setAttribute("class","class0");
+                div.setAttribute("id","start");
+                guess=celebrity[random(celebrity.length)];
+                var tempoarr=guess.split(" ");
+                guess=tempoarr.join("")
+                ourarr=guess.split(" ");
+                emptystring=""
+                var image=document.createElement('img');
+                image.setAttribute("id","image");
+                image.src="https://www.oligalma.com/downloads/images/hangman/hangman/4.jpg";
+                image.style.width="100px";
+                image.style.height="200px";
+                for(var i=0;i<ourarr.length;i++){
+                    for(var j=0;j<ourarr[i].length;j++){
+                        emptystring+=" _ "
+                    }
+                    emptystring+="   ";
+                }
+                var divc=document.createElement("div");
+                divc.setAttribute("id","guess");
+                divc.textContent=emptystring;
+                var divi=document.createElement("div");
+                divi.setAttribute("id","divimage");
+                divi.append(image);
+                div.append(divi);
+                div.append(divc);
+                var divb=document.createElement("div");
+                divb.setAttribute("id","divb");
+                var A=document.createElement("button");
+                A.setAttribute("id","A");
+                A.textContent="A";
+                A.addEventListener('click',compare);
+                var B=document.createElement("button");
+                B.setAttribute("id","B");
+                B.textContent="B";
+                B.addEventListener('click',compare);
+                var C=document.createElement("button");
+                C.setAttribute("id","C");
+                C.textContent="C";
+                C.addEventListener('click',compare);
+                var D=document.createElement("button");
+                D.setAttribute("id","D");
+                D.textContent="D";
+                D.addEventListener('click',compare);
+                var E=document.createElement("button");
+                E.setAttribute("id","E");
+                E.textContent="E";
+                E.addEventListener('click',compare);
+                var F=document.createElement("button");
+                F.setAttribute("id","F");
+                F.textContent="F";
+                F.addEventListener('click',compare);
+                var G=document.createElement("button");
+                G.setAttribute("id","G");
+                G.textContent="G";
+                G.addEventListener('click',compare);
+                var H=document.createElement("button");
+                H.setAttribute("id","H");
+                H.textContent="H";
+                H.addEventListener('click',compare);
+                var I=document.createElement("button");
+                I.setAttribute("id","I");
+                I.textContent="I";
+                I.addEventListener('click',compare);
+                var J=document.createElement("button");
+                J.setAttribute("id","J");
+                J.textContent="J";
+                J.addEventListener('click',compare);
+                var K=document.createElement("button");
+                K.setAttribute("id","K");
+                K.textContent="K";
+                K.addEventListener('click',compare);
+                var L=document.createElement("button");
+                L.setAttribute("id","L");
+                L.textContent="L";
+                L.addEventListener('click',compare);
+                var M=document.createElement("button");
+                M.setAttribute("id","M");
+                M.textContent="M";
+                M.addEventListener('click',compare);
+                var N=document.createElement("button");
+                N.setAttribute("id","N");
+                N.textContent="N";
+                N.addEventListener('click',compare);
+                var O=document.createElement("button");
+                O.setAttribute("id","O");
+                O.textContent="O";
+                O.addEventListener('click',compare);
+                var P=document.createElement("button");
+                P.setAttribute("id","P");
+                P.textContent="P";
+                P.addEventListener('click',compare);
+                var Q=document.createElement("button");
+                Q.setAttribute("id","Q");
+                Q.textContent="Q";
+                Q.addEventListener('click',compare);
+                var R=document.createElement("button");
+                R.setAttribute("id","R");
+                R.textContent="R";
+                R.addEventListener('click',compare);
+                var S=document.createElement("button");
+                S.setAttribute("id","S");
+                S.textContent="S";
+                S.addEventListener('click',compare);
+                var T=document.createElement("button");
+                T.setAttribute("id","T");
+                T.textContent="T";
+                T.addEventListener('click',compare);
+                var U=document.createElement("button");
+                U.setAttribute("id","U");
+                U.textContent="U";
+                U.addEventListener('click',compare);
+                var V=document.createElement("button");
+                V.setAttribute("id","V");
+                V.textContent="V";
+                V.addEventListener('click',compare);
+                var W=document.createElement("button");
+                W.setAttribute("id","W");
+                W.textContent="W";
+                W.addEventListener('click',compare);
+                var X=document.createElement("button");
+                X.setAttribute("id","X");
+                X.textContent="X";
+                X.addEventListener('click',compare);
+                var Y=document.createElement("button");
+                Y.setAttribute("id","Y");
+                Y.textContent="Y";
+                Y.addEventListener('click',compare);
+                var Z=document.createElement("button");
+                Z.setAttribute("id","Z");
+                Z.textContent="Z";
+                Z.addEventListener('click',compare);
+                divb.append(A);
+                divb.append(B);
+                divb.append(C);
+                divb.append(D);
+                divb.append(E);
+                divb.append(F);
+                divb.append(G);
+                divb.append(H);
+                divb.append(I);
+                divb.append(J);
+                divb.append(K);
+                divb.append(L);
+                divb.append(M);
+                divb.append(N);
+                divb.append(O);
+                divb.append(P);
+                divb.append(Q);
+                divb.append(R);
+                divb.append(S);
+                divb.append(T);
+                divb.append(U);
+                divb.append(V);
+                divb.append(W);
+                divb.append(Z);
+                divb.append(Y);
+                divb.append(Z);
+                div.append(divb);
+                body.append(div);
+            }
+            function Create(){
+                var divmain=document.createElement("div");
+                divmain.setAttribute("class","class0");
+                divmain.setAttribute("id","main");
+                divmain.innerHTML="PLAY HANGMAN<br>GUESS THE BOLLYWOOD<br>CELEBRITY<br>";
+                var play=document.createElement("button");
+                play.textContent="CLICK TO PLAY";
+                play.addEventListener('click',startgame);
+                divmain.append(play);
+                body.append(divmain);
+
+            }
+            window.addEventListener('load',Create);
+        </script>
+    </body>
+</html>
